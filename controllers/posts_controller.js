@@ -1,5 +1,5 @@
 const getAllPosts = (req, res) => {
-  res.send("get all posts");
+  res.send("get alll posts");
 };
 const createPost = (req, res) => {
   res.send("create a post");
