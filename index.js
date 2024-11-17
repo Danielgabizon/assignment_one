@@ -4,15 +4,16 @@ const dotevn = require("dotenv").config();
 const port = process.env.PORT;
 
 const mongoose = require("mongoose");
-// Connect to the database and return a promise
-mongoose
-  .connect(process.env.DB_CONNECT)
-  .then(() => {
+const connectToDatabase = async () => {
+  try {
+    // Attempt to connect to the database
+    await mongoose.connect(process.env.DB_CONNECT);
     console.log("Successfully connected to the database");
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error("Error connecting to the database", err);
-  });
+  }
+};
+connectToDatabase();
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
