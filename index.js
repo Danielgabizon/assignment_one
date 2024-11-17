@@ -14,21 +14,19 @@ const port = process.env.PORT;
 const mongoose = require("mongoose");
 
 // Connect to the MongoDB database using the connection string from the environment variables (DB_CONNECT).
-// This uses options to ensure compatibility with the latest MongoDB features.
-mongoose.connect(process.env.DB_CONNECT, {
-  useNewUrlParser: true, // Use the new URL parser for MongoDB connections.
-  useUnifiedTopology: true, // Use the new topology engine for MongoDB.
-});
+mongoose.connect(process.env.DB_CONNECT);
 
 // Access the mongoose connection to check for success or errors during the connection.
 const db = mongoose.connection;
 
 // If there is an error with the database connection, log it to the console.
-db.on("error", console.error.bind(console, "connection error"));
+db.on("error", (err) => {
+  console.error("Error connecting to the database", err);
+});
 
 // Once the connection to the database is successfully established, log a success message.
-db.once("open", function () {
-  console.log("Connected to database");
+db.once("open", () => {
+  console.log("Successfully connected to the database");
 });
 
 // Import the routes for posts from the routes/posts_routes.js file.
