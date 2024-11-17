@@ -5,7 +5,10 @@ const router = express.Router();
 const postController = require("../controllers/posts_controller");
 // setting Up the routes:
 router.get("/", postController.getAllPosts);
+router.get("/:id", postController.getPostById);
+
 router.post("/", postController.createPost);
-router.delete("/", postController.deletePost);
-//exporting the router so that it can be imported and used in other parts of your application. F
+
+router.delete("/:id", postController.deletePost);
+//exporting the router so that it can be imported and used in other parts of application. F
 module.exports = router;
