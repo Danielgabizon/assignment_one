@@ -1,50 +1,71 @@
 const Posts = require("../models/posts_model");
 const mongoose = require("mongoose");
-const getAllPosts = async (req, res) => {
-  let posts;
-  const filter = req.query;
+
+const addNewPost = async (req, res) => {
   try {
-    if (filter.owner) {
-      posts = await Posts.find({ owner: filter.owner });
-    } else {
-      posts = await Posts.find();
+    title = req.body.title;
+    content = req.body.content;
+    if (!title || !content) {
+      return res.status(400).send("Title and content are required");
     }
-    return res.send(posts);
+    const post = await Posts.create(req.body);
+    return res.status(201).send(post);
   } catch (err) {
-    return res.status(400).send(err.message);
-  }
-};
-const getPostById = async (req, res) => {
-  const id = req.params.id;
-  try {
-    if (id) {
-      const post = await Posts.findById(
-        mongoose.Types.ObjectId.createFromTime(id)
-      );
-      return res.send(posts);
-    } else {
-      return res.status(404).send("Post Not Found");
-    }
-  } catch (err) {
-    return res.status(400).send(err.message);
+    return res.status(500).send(`Error creating post: ${err.message}`);
   }
 };
 
-const createPost = async (req, res) => {
+const getAllPosts = async (req, res) => {
   try {
-    const post = await Posts.create(req.body); // Await the result of create()
-    res.status(201).send(post); // Send the created post as response
+    const filter = req.query;
+    let posts;
+    if (filter.sender) {
+      // if the query string contains a sender, filter the posts by that sender
+      posts = await Posts.find({ sender: filter.sender });
+    } else {
+      // if there is no sender in the query string, get all posts
+      posts = await Posts.find();
+    }
+    return res.status(200).send(posts);
   } catch (err) {
-    res.status(400).send(err.message); // Send an error message if something goes wrong
+    return res.status(500).send(`Error fetching posts: ${err.message}`);
   }
 };
-const deletePost = (req, res) => {
-  res.send("delete a post");
+
+const getPostById = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const post = await Posts.findById(postId);
+    if (!post) {
+      return res.status(404).send({ message: "Post not found" });
+    }
+    return res.status(200).send(post);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
+};
+const updatePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const updateData = req.body;
+    // Update the post and return the updated document
+    const updatedPost = await Posts.findByIdAndUpdate(
+      postId, // The ID of the post to update
+      updateData, // The data to update
+      { new: true, runValidators: true } // Options: return the updated document and validate the update
+    );
+    if (!updatedPost) {
+      return res.status(404).send({ message: "Post not found" });
+    }
+    return res.send(updatedPost);
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
 };
 
 module.exports = {
+  addNewPost,
   getAllPosts,
   getPostById,
-  createPost,
-  deletePost,
+  updatePost,
 };
