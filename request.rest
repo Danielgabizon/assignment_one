@@ -1,26 +1,31 @@
-###
-
-GET http://localhost:3000/posts
-
-###
-
-GET http://localhost:3000/posts?owner=Daniel
-
-###
-
-GET http://localhost:3000/posts/673a31c1d2b1e95d3407fbef 
-
-###
+### add post
 
 POST http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "owner":"Daniel",
-    "title":"My Second post",
-    "content": "hello"
+    "sender": "222",
+    "title":"My first post",
+    "content": "first post"
 }
 
-####
+### get all posts
+GET http://localhost:3000/posts
 
-DELETE http://localhost:3000/posts/123
+### get all posts by sender id
+
+GET http://localhost:3000/posts?sender=212694657
+
+### get all posts by post id
+
+GET http://localhost:3000/posts/674227fb1a3c93decc8fd9d6
+
+### update post by id
+PUT http://localhost:3000/posts/674227fb1a3c93decc8fd9d6
+Content-Type: application/json
+
+{
+    "sender": "222",
+    "title":"My first post",
+    "content": "this is the edited version of that post"
+}
