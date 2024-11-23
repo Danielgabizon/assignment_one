@@ -18,7 +18,9 @@ const getPostById = async (req, res) => {
   const id = req.params.id;
   try {
     if (id) {
-      const post = await Posts.findById(new mongoose.Types.ObjectId(id));
+      const post = await Posts.findById(
+        mongoose.Types.ObjectId.createFromTime(id)
+      );
       return res.send(posts);
     } else {
       return res.status(404).send("Post Not Found");

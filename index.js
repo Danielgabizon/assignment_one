@@ -6,9 +6,8 @@ const port = process.env.PORT;
 const mongoose = require("mongoose");
 const connectToDatabase = async () => {
   try {
-    // Attempt to connect to the database
     await mongoose.connect(process.env.DB_CONNECT);
-    console.log("Successfully connected to the databaseeeeeeeeeeeeeeee");
+    console.log("Successfully connected to the database");
   } catch (err) {
     console.error("Error connecting to the database", err);
   }
