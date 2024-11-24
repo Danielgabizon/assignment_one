@@ -19,7 +19,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const posts_routes = require("./routes/posts_routes");
+const comments_routes = require("./routes/comments_routes");
 app.use("/posts", posts_routes);
+app.use("/comments", comments_routes);
 
 // Start the Express server, listening on the port defined by the environment variable.
 app.listen(port, () => {
