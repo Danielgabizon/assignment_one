@@ -9,7 +9,8 @@ const addNewComment = async (req, res) => {
       return res.status(400).send("Title and content are required");
     }
     const Comment = await Comments.create({
-      postid: req.query.postid,
+      postid: req.params.postid,
+      sender: req.body.sender,
       title: req.body.title,
       content:req.body.content
     });
@@ -21,13 +22,13 @@ const addNewComment = async (req, res) => {
 
 const getAllCommentsByPost = async (req, res) => {
   try {
-    const filter = req.query;
-    let Comments;
+    const filter = req.params;
+    let comments;
     if (filter.postid) {
       // if the query string contains a post id, filter the Comments by that post
-      Comments = await Comments.find({post: filter.postid });
+      comments = await Comments.find({postid: filter.postid });
     }
-    return res.status(200).send(Comments);
+    return res.status(200).send(comments);
   } catch (err) {
     return res.status(500).send(`Error fetching Comments: ${err.message}`);
   }
@@ -52,8 +53,9 @@ const updateComment = async (req, res) => {
   }
 };
 
-const deleteComment = async (id) => {
-  return Comments.findByIdAndDelete(id);
+const deleteComment = async (req,res) => {
+  Comments.findByIdAndDelete(req.params.id);
+  return res.status(200).send({ message: "Comment deleted" });
 };
 
 
