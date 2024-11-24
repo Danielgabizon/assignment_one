@@ -4,7 +4,7 @@ POST http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "sender": "222",
+    "sender": "333",
     "title":"My first post",
     "content": "first post"
 }
@@ -21,11 +21,13 @@ GET http://localhost:3000/posts?sender=212694657
 GET http://localhost:3000/posts/674227fb1a3c93decc8fd9d6
 
 ### update post by id
-PUT http://localhost:3000/posts/674227fb1a3c93decc8fd9d6
+PUT http://localhost:3000/posts/6743890f7bd1db253c4cdfaf
 Content-Type: application/json
 
 {
-    "sender": "222",
+    "sender": "333",
     "title":"My first post",
     "content": "this is the edited version of that post"
 }
+### delete post by id
+DELETE http://localhost:3000/posts/674227fb1a3c93decc8fd9d6

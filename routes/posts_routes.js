@@ -8,6 +8,6 @@ router.post("/", postController.addNewPost);
 router.get("/", postController.getAllPosts);
 router.get("/:id", postController.getPostById);
 router.put("/:id", postController.updatePost);
-
+router.delete("/:id", postController.deletePost);
 //exporting the router so that it can be imported and used in other parts of application. F
 module.exports = router;

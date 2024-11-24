@@ -6,12 +6,14 @@ const addNewPost = async (req, res) => {
     title = req.body.title;
     content = req.body.content;
     if (!title || !content) {
-      return res.status(400).send("Title and content are required");
+      return res
+        .status(400)
+        .send({ status: "Error", message: "Title and content are required" });
     }
     const post = await Posts.create(req.body);
-    return res.status(201).send(post);
+    return res.status(201).send({ status: "Success", data: post });
   } catch (err) {
-    return res.status(500).send(`Error creating post: ${err.message}`);
+    return res.status(500).send({ status: "Error", message: err.message });
   }
 };
 
@@ -26,9 +28,9 @@ const getAllPosts = async (req, res) => {
       // if there is no sender in the query string, get all posts
       posts = await Posts.find();
     }
-    return res.status(200).send(posts);
+    return res.status(200).send({ status: "Success", data: posts });
   } catch (err) {
-    return res.status(500).send(`Error fetching posts: ${err.message}`);
+    return res.status(500).send({ status: "Error", message: err.message });
   }
 };
 
@@ -37,11 +39,13 @@ const getPostById = async (req, res) => {
     const postId = req.params.id;
     const post = await Posts.findById(postId);
     if (!post) {
-      return res.status(404).send({ message: "Post not found" });
+      return res
+        .status(404)
+        .send({ status: "Error", message: "Post not found" });
     }
-    return res.status(200).send(post);
+    return res.status(200).send({ status: "Success", data: post });
   } catch (err) {
-    return res.status(400).send(err.message);
+    return res.status(400).send({ status: "Error", message: err.message });
   }
 };
 const updatePost = async (req, res) => {
@@ -55,17 +59,33 @@ const updatePost = async (req, res) => {
       { new: true, runValidators: true } // Options: return the updated document and validate the update
     );
     if (!updatedPost) {
-      return res.status(404).send({ message: "Post not found" });
+      return res
+        .status(404)
+        .send({ status: "Error", message: "Post not found" });
     }
-    return res.send(updatedPost);
+    return res.send({ status: "Success", data: updatedPost });
   } catch (err) {
-    return res.status(400).send(err.message);
+    return res.status(400).send({ status: "Error", message: err.message });
   }
 };
-
+const deletePost = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const post = await Posts.findByIdAndDelete(postId);
+    if (!post) {
+      return res
+        .status(404)
+        .send({ status: "Error", message: "Post not found" });
+    }
+    return res.status(204).send({ status: "Success", data: null });
+  } catch (err) {
+    return res.status(400).send({ status: "Error", message: err.message });
+  }
+};
 module.exports = {
   addNewPost,
   getAllPosts,
   getPostById,
   updatePost,
+  deletePost,
 };
