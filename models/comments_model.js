@@ -5,10 +5,11 @@ const commentsSchema = new Schema({
     type: Number,
     required: true,
   },
-  post: { 
+  postid: { 
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post',
-    required: true },
+    required: true
+   },
   title: {
     type: String,
     required: true,
