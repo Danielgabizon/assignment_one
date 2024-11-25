@@ -27,7 +27,7 @@ Content-Type: application/json
 {
     "sender": "333",
     "title":"My first post",
-    "content": "this is the edited version of that post"
+    "content": "this is the editedd version of that post"
 }
 
 ### delete post by id
@@ -35,7 +35,7 @@ DELETE http://localhost:3000/posts/674227fb1a3c93decc8fd9d6
 
 ### add comment
 
-POST http://localhost:3000/comments/674379ca9d697fec71b9643b
+POST http://localhost:3000/comments/674227eb1a3c93decc8fd9d2
 Content-Type: application/json
 
 {
@@ -55,11 +55,11 @@ Content-Type: application/json
 }
 
 ### get all comments on post
-GET http://localhost:3000/comments/674379ca9d697fec71b9643b
+GET http://localhost:3000/comments/674227eb1a3c93decc8fd9d2
 
 
 ### update comment by id
-PUT http://localhost:3000/comments/67437df8c43de0ba0d3c823b
+PUT http://localhost:3000/comments/6744dd14ae58a4e1166a75e5
 Content-Type: application/json
 
 {
@@ -68,5 +68,5 @@ Content-Type: application/json
 
 
 ### delete comment by id
-DELETE  http://localhost:3000/comments/6743817342c977786848387b
+DELETE  http://localhost:3000/comments/6744dd14ae58a4e1166a75e5
 

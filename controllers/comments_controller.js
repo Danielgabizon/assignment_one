@@ -12,7 +12,7 @@ const addNewComment = async (req, res) => {
       postid: req.params.postid,
       sender: req.body.sender,
       title: req.body.title,
-      content:req.body.content
+      content: req.body.content,
     });
     return res.status(201).send(Comment);
   } catch (err) {
@@ -26,7 +26,7 @@ const getAllCommentsByPost = async (req, res) => {
     let comments;
     if (filter.postid) {
       // if the query string contains a post id, filter the Comments by that post
-      comments = await Comments.find({postid: filter.postid });
+      comments = await Comments.find({ postid: filter.postid });
     }
     return res.status(200).send(comments);
   } catch (err) {
@@ -53,15 +53,24 @@ const updateComment = async (req, res) => {
   }
 };
 
-const deleteComment = async (req,res) => {
-  Comments.findByIdAndDelete(req.params.id);
-  return res.status(200).send({ message: "Comment deleted" });
+const deleteComment = async (req, res) => {
+  try {
+    const commentId = req.params.id;
+    const comment = await Comments.findByIdAndDelete(commentId);
+    if (!comment) {
+      return res
+        .status(404)
+        .send({ status: "Error", message: "Comment not found" });
+    }
+    return res.status(204).send({ status: "Success", data: null });
+  } catch (err) {
+    return res.status(500).send({ status: "Error", message: err.message });
+  }
 };
-
 
 module.exports = {
   addNewComment,
   getAllCommentsByPost,
   updateComment,
-  deleteComment
+  deleteComment,
 };
