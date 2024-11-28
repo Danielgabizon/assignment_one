@@ -4,7 +4,7 @@ POST http://localhost:3000/posts
 Content-Type: application/json
 
 {
-    "sender": "333",
+    "sender": "111",
     "title":"My first post",
     "content": "first post"
 }
@@ -45,7 +45,7 @@ Content-Type: application/json
 }
 ### add comment
 
-POST http://localhost:3000/comments/674379ca9d697fec71b9643b
+POST http://localhost:3000/comments/674227eb1a3c93decc8fd9d2
 Content-Type: application/json
 
 {
