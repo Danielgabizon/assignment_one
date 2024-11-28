@@ -77,7 +77,7 @@ const deletePost = async (req, res) => {
         .status(404)
         .send({ status: "Error", message: "Post not found" });
     }
-    return res.status(204).send({ status: "Success", data: null });
+    return res.status(200).send({ status: "Success", data: "null" });
   } catch (err) {
     return res.status(400).send({ status: "Error", message: err.message });
   }
