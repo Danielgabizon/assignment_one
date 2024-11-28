@@ -62,7 +62,7 @@ const deleteComment = async (req, res) => {
         .status(404)
         .send({ status: "Error", message: "Comment not found" });
     }
-    return res.status(204).send({ status: "Success", data: null });
+    return res.status(204).send({ status: "Success", data: "null" });
   } catch (err) {
     return res.status(500).send({ status: "Error", message: err.message });
   }
